@@ -1,1 +1,2 @@
 # bitrot
+BIT ROT site
