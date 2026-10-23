@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIT ROT</title><meta name="description" content="BIT ROT. Hand-glitched pixel characters. Supply: TBD. Launching on Drip Market."><link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head>
+<body><div class="scan"></div><canvas id="noise"></canvas>
+<nav><a href="#about">ABOUT</a><a href="#clans">CLANS</a><a href="#gallery">GALLERY</a><a href="#slots">SPIN</a><a href="#rep">REP</a></nav>
+<header class="hero"><img class="hero-gif" src="assets/hero.gif" alt="BIT ROT piece #2400">
+<h1 class="logo glitch" data-t="BIT ROT">BIT ROT</h1>
+<p class="tag">Something new is coming...<span class="cur"></span></p>
+<p class="launch">LAUNCHING ON DRIP MARKET</p></header>
+<section id="about" class="box"><h2 class="glitch" data-t="ABOUT">ABOUT</h2>
+<p>Hand-glitched pixel characters. Pulled from a decaying arcade at 3AM. Every one loops, jitters, and rots in its own way.</p>
+<ul class="facts"><li>SUPPLY: TBD</li><li>MINT DATE: TBA</li><li>PRICE: TBA</li><li>MARKET: DRIP MARKET</li></ul></section>
+<section id="clans"><h2 class="glitch" data-t="CLANS">CLANS</h2><p class="sub">Every piece belongs to exactly one clan.</p><div id="clangrid" class="clangrid"></div></section>
+<section id="gallery"><h2 class="glitch" data-t="GALLERY">GALLERY</h2>
+<div class="filters"><button class="on" data-e="all">ALL</button><button data-e="hexborn">HEXBORN</button><button data-e="the-hollowed">THE HOLLOWED</button><button data-e="static-choir">STATIC CHOIR</button><button data-e="glitch-brood">GLITCH BROOD</button><button data-e="stormblight">STORMBLIGHT</button><button data-e="gutter-folk">GUTTER FOLK</button><button data-e="drip-saints">DRIP SAINTS</button></div>
+<div class="car" id="car"><button class="arw prev" aria-label="Previous">&lt;</button><div class="row" data-dir="1"><div class="track"></div></div><div class="row" data-dir="-1"><div class="track"></div></div><button class="arw next" aria-label="Next">&gt;</button></div></section>
+<section id="slots"><h2 class="glitch" data-t="SPIN THE ROT">SPIN THE ROT</h2>
+<div class="cab"><div class="cab-top">BIT ROT // WL MACHINE</div><div class="screen"><div class="reels"><div class="reel"><img alt=""></div><div class="reel"><img alt=""></div><div class="reel"><img alt=""></div></div><div class="payline"></div></div>
+<div class="wal"><button id="connect" class="connect">CONNECT WALLET</button><button id="connectwc" class="connect wc">WALLETCONNECT</button><span id="addr" class="addr" hidden></span><button id="disc" class="discbtn" hidden>DISCONNECT</button></div><p id="walmsg" class="walmsg"></p>
+<p id="slotmsg" class="slotmsg">MATCH 3 TO WIN A WL SPOT</p><button id="spin" class="spin">SPIN</button><p id="spinsleft" class="spinsleft"></p></div>
+<div id="win" class="win" hidden><h3 class="glitch" data-t="YOU WON A WL SPOT">YOU WON A WL SPOT</h3>
+<form id="wlform"><label>X HANDLE (OPTIONAL)<input name="x" maxlength="16" pattern="@?[A-Za-z0-9_]{1,15}" placeholder="@yourhandle"></label><p class="winwal">WALLET: <b id="winaddr"></b></p><button type="submit">SAVE HANDLE</button></form>
+<div id="claim" class="claim" hidden><p>YOUR CLAIM CODE</p><b id="code"></b><p>Screenshot this and DM it to <a href="https://x.com/drylinemix" target="_blank" rel="noopener">@drylinemix</a> on X.</p></div>
+<p class="disc">WL subject to verification. One per wallet.</p></div></section>
+<section id="rep" class="box"><span class="soon">COMING SOON</span><h2 class="glitch" data-t="REP CARD">REP CARD</h2>
+<p>A holder reputation score that tracks how you actually show up: hold time, sales, profits, and X support. Other projects can plug into it for whitelists.</p>
+<div class="stats"><div>HOLD TIME<b>???</b></div><div>SALES<b>???</b></div><div>PROFITS<b>???</b></div><div>X SUPPORT<b>???</b></div></div></section>
+<footer><a class="btn" href="https://x.com/drylinemix" target="_blank" rel="noopener">X @DRYLINEMIX</a><a class="btn" href="#">DRIP MARKET</a><a class="btn" href="#">OPENSEA</a><p>BIT ROT &copy; 2026</p></footer>
+<div id="wcm" class="wcm" hidden><div class="wcbox"><p>SCAN WITH YOUR WALLET</p><div id="wcqr"></div><a id="wcmm" class="btn" href="#">OPEN METAMASK</a><button id="wcx">CANCEL</button></div></div>
+<div id="lb" class="lb"><img alt=""><p></p></div>
+<script>window.BITROT_CONFIG={API:"https://viennqvafgtvlniwwrkh.supabase.co/functions/v1/bitrot-spin",ANON:"sb_publishable_RivvE73MxKVlMds79xI5fA_uXU1K0zS",WALLETCONNECT_PROJECT_ID:"ca594227aa82265b4d7b52bce881d263"};</script>
+<script src="script.js"></script></body></html>
