@@ -122,3 +122,6 @@ footer p{width:100%;font-size:18px;color:#6b5560;margin-top:1rem}
 .soundbtn.on{background:var(--pk);color:var(--bk)}
 .wopts{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.7rem}
 .wopts .connect{text-decoration:none;display:inline-block;padding:.8rem 1rem;font-size:10px}
+
+/* SLOTS DISABLED: remove to restore */
+#slots,#wcm{display:none!important}
