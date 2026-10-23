@@ -100,8 +100,21 @@ async function recordWin(data){if(!data.x)return {ok:true};const r=await api('ha
 /* --- wallets: injected (EIP-6963 + window.ethereum) --- */
 const announced=[];
 addEventListener('eip6963:announceProvider',e=>{if(e?.detail?.provider&&!announced.some(a=>a.provider===e.detail.provider))announced.push(e.detail)});
-try{dispatchEvent(new Event('eip6963:requestProvider'))}catch(e){}
-function injected(){const w=window.ethereum;if(w&&w.providers&&w.providers.length)return w.providers.find(p=>p.isMetaMask)||w.providers[0];return w||announced[0]?.provider||null}
+function ask6963(){try{dispatchEvent(new Event('eip6963:requestProvider'))}catch(e){}}
+ask6963();
+function pickInjected(){
+  const mm=announced.find(a=>a.info?.rdns==='io.metamask'||/^io\.metamask/.test(a.info?.rdns||''));if(mm)return mm.provider;
+  const w=window.ethereum;
+  if(w&&Array.isArray(w.providers)&&w.providers.length)return w.providers.find(p=>p.isMetaMask&&!p.isBraveWallet)||w.providers[0];
+  if(w)return w;
+  return announced[0]?.provider||null}
+/** Find an injected wallet, waiting up to ~3s for late injection (ethereum#initialized / EIP-6963 announce). */
+async function findInjected(ms=3000){
+  let p=pickInjected();if(p)return p;ask6963();
+  return new Promise(res=>{let done=false;const fin=()=>{if(done)return;done=true;clearInterval(iv);removeEventListener('ethereum#initialized',fin);res(pickInjected())};
+    addEventListener('ethereum#initialized',fin,{once:true});
+    const iv=setInterval(()=>{if(pickInjected())fin()},150);setTimeout(fin,ms)})}
+const MM_DAPP='https://metamask.app.link/dapp/play.prixville.com/bitrot/';
 const userRejected=e=>e?.code===4001||e?.code===5000||/reject|denied|cancel/i.test(e?.message||'');
 async function accountsNow(p){try{const a=await p.request({method:'eth_accounts'});return a?.[0]&&/^0x[0-9a-fA-F]{40}$/.test(a[0])?a[0]:null}catch(e){return null}}
 /** Connect, robust to wallets that approve but never resolve, or report "already pending" (-32002). */
@@ -164,12 +177,18 @@ async function connectWC(){
 $('wcx').onclick=()=>{$('wcm').hidden=true;try{wcProv?.disconnect()}catch(e){}};
 
 /* --- connect flow --- */
+function noWallet(){
+  const wc=CFG.WALLETCONNECT_PROJECT_ID?'<button type="button" class="connect wc" id="nwwc">WALLETCONNECT</button>':'';
+  status(isMobile()
+    ?'NO WALLET IN THIS BROWSER. OPEN THE SITE INSIDE METAMASK, OR USE WALLETCONNECT:<div class="wopts"><a class="connect" href="'+MM_DAPP+'">OPEN IN METAMASK</a>'+wc+'</div>'
+    :'NO BROWSER WALLET DETECTED. UNLOCK/ENABLE THE METAMASK EXTENSION AND RELOAD, OR USE WALLETCONNECT:<div class="wopts">'+wc+'<a class="connect wc" href="https://metamask.io/download/" target="_blank" rel="noopener">GET METAMASK</a></div>');
+  const b=document.getElementById('nwwc');if(b)b.onclick=()=>connect('wc')}
 function status(t,cls=''){$('walmsg').innerHTML=t;$('walmsg').className='walmsg'+(cls?' '+cls:'')}
 async function connect(kind){
   try{
     let p,a;
     if(kind==='wc'){if(!CFG.WALLETCONNECT_PROJECT_ID)return;[p,a]=await connectWC()}
-    else{p=injected();if(!p){status(isMobile()?'NO BROWSER WALLET. TAP WALLETCONNECT, OR <a href="https://metamask.io/download/" target="_blank" rel="noopener">INSTALL METAMASK</a>':'NO WALLET FOUND. <a href="https://metamask.io/download/" target="_blank" rel="noopener">INSTALL METAMASK</a>, <a href="https://rabby.io" target="_blank" rel="noopener">RABBY</a> OR <a href="https://www.coinbase.com/wallet" target="_blank" rel="noopener">COINBASE WALLET</a>');return}
+    else{status('LOOKING FOR YOUR WALLET...');p=await findInjected();if(!p){noWallet();return}
       status('APPROVE THE CONNECTION IN YOUR WALLET');a=await requestAccount(p)}
     provider=p;
     await signIn(p,a,()=>{status('SIGN THE FREE MESSAGE IN YOUR WALLET (NO GAS)');if(kind==='wc'&&isMobile())openLink(walletReturn(p))});
@@ -202,19 +221,20 @@ function showClaim(code){winBox.hidden=false;$('winaddr').textContent=short(sess
 function animate(res,done){
   cab.classList.add('rolling');
   reels.forEach((img,i)=>{const box=img.parentElement;box.classList.add('spinning');let k=rnd(7);
-    const iv=setInterval(()=>{k=(k+1)%7;img.src='assets/'+SYM[k]},90);
-    const stop=()=>{if(!res.ready)return setTimeout(stop,150);clearInterval(iv);img.src='assets/'+SYM[res.reels[i]];box.classList.remove('spinning');box.classList.add('stop');setTimeout(()=>box.classList.remove('stop'),280);
+    const iv=setInterval(()=>{k=(k+1)%7;img.src='assets/'+SYM[k];if(i===0)window.SFX?.tick()},90);
+    const stop=()=>{if(!res.ready)return setTimeout(stop,150);clearInterval(iv);img.src='assets/'+SYM[res.reels[i]];box.classList.remove('spinning');box.classList.add('stop');window.SFX?.stop();setTimeout(()=>box.classList.remove('stop'),280);
       if(i===2){cab.classList.remove('rolling');done()}};
     setTimeout(stop,1100+i*550)});
 }
 function funRoll(){const hit=rnd(25)===0;if(hit){const k=rnd(7);return [k,k,k]}let r;do{r=[rnd(7),rnd(7),rnd(7)]}while(r[0]===r[1]&&r[1]===r[2]);return r}
 reels.forEach((r,i)=>r.src='assets/'+SYM[(i*2)%7]);
 spinBtn.onclick=async()=>{
-  if(spinning||!session)return;spinning=true;refresh();msg.textContent='ROTTING...';msg.className='slotmsg';
+  if(spinning||!session)return;spinning=true;window.SFX?.click();refresh();msg.textContent='ROTTING...';msg.className='slotmsg';
   const res={ready:false,reels:[0,1,2]};let out=null;const fun=state.already_won;
   animate(res,()=>{spinning=false;
     if(!out){msg.textContent='SPIN FAILED. TRY AGAIN.';return refresh()}
     const hit=res.reels[0]===res.reels[1]&&res.reels[1]===res.reels[2];
+    if(hit)window.SFX?.win();else window.SFX?.lose();
     if(hit){cab.classList.add('jackpot');setTimeout(()=>cab.classList.remove('jackpot'),2100)}
     if(out.won){msg.textContent='>>> TRIPLE ROT <<<';msg.className='slotmsg won';state.already_won=true;state.claim_code=out.claim_code;
       $('wlform').hidden=false;$('claim').hidden=true;winBox.hidden=false;$('winaddr').textContent=short(session.address);$('code').textContent=out.claim_code;$('claim').hidden=false;winBox.scrollIntoView({block:'center'});

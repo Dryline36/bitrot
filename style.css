@@ -117,3 +117,8 @@ footer p{width:100%;font-size:18px;color:#6b5560;margin-top:1rem}
 .wcbox{background:var(--bk2);border:2px solid var(--pk);padding:1.4rem;text-align:center;display:flex;flex-direction:column;gap:.9rem;align-items:center}
 .wcbox p{font-family:'Press Start 2P';font-size:10px;color:var(--pk)}
 #wcqr svg{width:240px;height:240px;image-rendering:pixelated}
+
+.soundbtn{position:fixed;right:14px;bottom:14px;z-index:60;font-size:9px;padding:.7rem .9rem;background:var(--bk);color:var(--pk);border:2px solid var(--pk);box-shadow:3px 3px 0 var(--mg)}
+.soundbtn.on{background:var(--pk);color:var(--bk)}
+.wopts{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.7rem}
+.wopts .connect{text-decoration:none;display:inline-block;padding:.8rem 1rem;font-size:10px}
