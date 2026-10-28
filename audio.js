@@ -36,7 +36,14 @@ window.SFX={
   lose(){if(!ok())return;const t=T();tone(140,t,.35,'sawtooth',.25,sfxBus,.6);tone(147,t,.35,'square',.15,sfxBus,.6)},
   win(){if(!ok())return;const t=T();[69,72,76,81,76,81,84,88].forEach((n,i)=>tone(N(n),t+i*.09,.14,'square',.2));tone(N(93),t+.75,.6,'square',.22);tone(N(57),t+.75,.6,'sawtooth',.2);noise(t+.75,.4,.12,sfxBus,5000)},
   blip(){if(ok())tone(2200+Math.random()*1500,T(),.025,'square',.04,sfxBus,.5)},
-  click(){if(!ok())return;const t=T();tone(900,t,.05,'square',.12,sfxBus,.3);noise(t,.03,.08,sfxBus,4000)}
+  click(){if(!ok())return;const t=T();tone(900,t,.05,'square',.12,sfxBus,.3);noise(t,.03,.08,sfxBus,4000)},
+  /* ROT YOURSELF + ROT METER */
+  rot(){if(!ok())return;const t=T();for(let i=0;i<6;i++){tone(300+Math.random()*1800,t+i*.035,.05,'square',.12,sfxBus,.2+Math.random()*.6)}noise(t,.22,.22,sfxBus,800);tone(90,t+.05,.25,'sawtooth',.2,sfxBus,.5)},
+  knob(){if(!ok())return;const n=performance.now();if(n-(this._k||0)<45)return;this._k=n;tone(600+Math.random()*900,T(),.02,'square',.05,sfxBus,.7)},
+  save(){if(!ok())return;const t=T();noise(t,.05,.2,sfxBus,3000);tone(1760,t+.04,.06,'square',.12);tone(2637,t+.1,.12,'square',.12)},
+  feed(){if(!ok())return;const t=T();tone(120,t,.12,'square',.3,sfxBus,.5);noise(t,.08,.2,sfxBus,600);[57,60,64,69,72].forEach((n,i)=>tone(N(n),t+.12+i*.06,.1,'square',.16));tone(N(81),t+.45,.35,'square',.16)},
+  flat(){if(!ok())return;const t=T();tone(N(81),t,.9,'square',.1);noise(t,.5,.1,sfxBus,2000)},
+  deny(){if(!ok())return;const t=T();tone(180,t,.1,'square',.2);tone(150,t+.12,.18,'square',.2)}
 };
 /* toggle button */
 let btn=null;function paint(){btn.textContent=on?'SOUND: ON':'SOUND: OFF';btn.setAttribute('aria-pressed',on);btn.classList.toggle('on',on)}
@@ -47,6 +54,6 @@ addEventListener('DOMContentLoaded',()=>{
   const first=e=>{if(e.target===btn)return;removeEventListener('pointerdown',first,true);if(pref()!=='off'&&!on)set(true)};
   addEventListener('pointerdown',first,true);
   document.addEventListener('pointerover',e=>{if(e.target.closest?.('button,.btn,a,.card')&&!e.target.closest('#sound'))SFX.blip()});
-  document.addEventListener('click',e=>{if(e.target.closest?.('button,.btn')&&e.target.id!=='sound'&&e.target.id!=='spin')SFX.click()});
+  document.addEventListener('click',e=>{if(e.target.closest?.('button,.btn')&&e.target.id!=='sound'&&e.target.id!=='spin'&&!e.target.closest('[data-sfx]'))SFX.click()});
 });
 })();

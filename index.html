@@ -2,7 +2,7 @@
 <title>BIT ROT</title><meta name="description" content="BIT ROT. Hand-glitched pixel characters. Supply: TBD. Launching on Drip Market."><link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"></head>
 <body><div class="scan"></div><canvas id="noise"></canvas>
-<nav><a href="#about">ABOUT</a><a href="#clans">CLANS</a><a href="#gallery">GALLERY</a><a href="#rep">REP</a></nav>
+<nav><a href="#about">ABOUT</a><a href="#clans">CLANS</a><a href="#gallery">GALLERY</a><a href="#rotyou">ROT YOU</a><a href="#meter">METER</a><a href="#rep">REP</a></nav>
 <header class="hero"><img class="hero-gif" src="assets/hero.gif" alt="BIT ROT piece #2400">
 <h1 class="logo glitch" data-t="BIT ROT">BIT ROT</h1>
 <p class="tag">Something new is coming...<span class="cur"></span></p>
@@ -22,11 +22,28 @@
 <form id="wlform"><label>X HANDLE (OPTIONAL)<input name="x" maxlength="16" pattern="@?[A-Za-z0-9_]{1,15}" placeholder="@yourhandle"></label><p class="winwal">WALLET: <b id="winaddr"></b></p><button type="submit">SAVE HANDLE</button></form>
 <div id="claim" class="claim" hidden><p>YOUR CLAIM CODE</p><b id="code"></b><p>Screenshot this and DM it to <a href="https://x.com/drylinemix" target="_blank" rel="noopener">@drylinemix</a> on X.</p></div>
 <p class="disc">WL subject to verification. One per wallet.</p></div></section>
+<section id="rotyou"><h2 class="glitch" data-t="ROT YOURSELF">ROT YOURSELF</h2><p class="sub">Feed it your PFP. Crank the knobs. Nothing leaves your device.</p>
+<div class="gt"><div class="gt-screen"><canvas id="gtc" width="512" height="512" aria-label="Rotted preview"></canvas><label class="gt-drop" id="gtdrop"><input id="gtfile" type="file" accept="image/*"><span>TAP TO DROP YOUR PFP</span></label></div>
+<div class="gt-ctl"><label class="gt-up btn" for="gtfile">UPLOAD PFP</label>
+<div class="gt-sl"><label>DRIFT<input type="range" min="0" max="100" value="35" data-k="drift"></label><label>SPLIT<input type="range" min="0" max="100" value="40" data-k="split"></label><label>TEAR<input type="range" min="0" max="100" value="30" data-k="tear"></label><label>MELT<input type="range" min="0" max="100" value="25" data-k="melt"></label><label>STATIC<input type="range" min="0" max="100" value="20" data-k="static"></label></div>
+<button id="gtrot" class="spin gt-rot" type="button" data-sfx>ROT IT</button>
+<div class="gt-dl"><button id="gtgif" type="button" data-sfx>SAVE GIF</button><button id="gtpng" type="button" data-sfx>SAVE PNG</button><button id="gtx" type="button">POST ON X</button></div>
+<p id="gtmsg" class="gt-msg">Save it first, then attach it to your post.</p></div></div></section>
+<section id="meter"><h2 class="glitch" data-t="ROT METER">ROT METER</h2><p class="sub">It drains every hour. Keep it alive. Feed it 7 days straight and your wallet is on the WL.</p>
+<div class="rm" id="rm"><div class="rm-screen"><canvas id="rmc" width="384" height="384" aria-hidden="true"></canvas><div class="rm-dead">FLATLINED</div></div>
+<div class="rm-bar" aria-label="Rot meter"><div class="rm-fill" id="rmfill"></div><span class="rm-pct" id="rmpct">--%</span></div>
+<p class="rm-info" id="rminfo">READING THE ROT...</p>
+<div class="wal rm-wal"><button id="rmconnect" class="connect" type="button">CONNECT WALLET</button><button id="rmconnectwc" class="connect wc" type="button">WALLETCONNECT</button><span id="rmaddr" class="addr" hidden></span><button id="rmdisc" class="discbtn" type="button" hidden>DISCONNECT</button></div>
+<p id="rmmsg" class="walmsg"></p>
+<button id="rmfeed" class="spin rm-feed" type="button" data-sfx disabled>FEED THE ROT</button>
+<div class="rm-streak"><p id="rmstreak">YOUR STREAK: 0/7</p><div class="pips" id="rmpips"></div><p id="rmnext" class="spinsleft"></p><p id="rmwl" class="rm-wl" hidden>WL LOCKED IN</p></div>
+<p class="disc">One feed per wallet per day (resets 00:00 UTC). Miss a day and your streak resets. Free signature, no gas.</p></div></section>
+<div id="rmwcm" class="wcm rmwcm" hidden><div class="wcbox"><p>SCAN WITH YOUR WALLET</p><div id="rmwcqr" class="wcqr"></div><a id="rmwcmm" class="btn" href="#">OPEN METAMASK</a><button id="rmwcx" type="button">CANCEL</button></div></div>
 <section id="rep" class="box"><span class="soon">COMING SOON</span><h2 class="glitch" data-t="REP CARD">REP CARD</h2>
 <p>A holder reputation score that tracks how you actually show up: hold time, sales, profits, and X support. Other projects can plug into it for whitelists.</p>
 <div class="stats"><div>HOLD TIME<b>???</b></div><div>SALES<b>???</b></div><div>PROFITS<b>???</b></div><div>X SUPPORT<b>???</b></div></div></section>
 <footer><a class="btn" href="https://x.com/drylinemix" target="_blank" rel="noopener">X @DRYLINEMIX</a><a class="btn" href="#">DRIP MARKET</a><a class="btn" href="#">OPENSEA</a><p>BIT ROT &copy; 2026</p></footer>
 <div id="wcm" class="wcm" hidden style="display:none"><div class="wcbox"><p>SCAN WITH YOUR WALLET</p><div id="wcqr"></div><a id="wcmm" class="btn" href="#">OPEN METAMASK</a><button id="wcx">CANCEL</button></div></div>
 <div id="lb" class="lb"><img alt=""><p></p></div>
-<script>window.BITROT_CONFIG={API:"https://viennqvafgtvlniwwrkh.supabase.co/functions/v1/bitrot-spin",ANON:"sb_publishable_RivvE73MxKVlMds79xI5fA_uXU1K0zS",WALLETCONNECT_PROJECT_ID:"ca594227aa82265b4d7b52bce881d263"};</script>
-<script src="audio.js"></script><script src="script.js"></script></body></html>
+<script>window.BITROT_CONFIG={API:"https://viennqvafgtvlniwwrkh.supabase.co/functions/v1/bitrot-spin",ANON:"sb_publishable_RivvE73MxKVlMds79xI5fA_uXU1K0zS",WALLETCONNECT_PROJECT_ID:"ca594227aa82265b4d7b52bce881d263",ROT_API:"https://viennqvafgtvlniwwrkh.supabase.co/functions/v1/bitrot-rot"};</script>
+<script src="audio.js"></script><script src="script.js"></script><script src="rot.js"></script></body></html>
