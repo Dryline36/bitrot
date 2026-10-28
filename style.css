@@ -179,3 +179,24 @@ footer p{width:100%;font-size:18px;color:#6b5560;margin-top:1rem}
 .wcqr svg{width:240px;height:240px;image-rendering:pixelated}
 @media(max-width:760px){.gt{grid-template-columns:1fr;gap:1.6rem}}
 @media(max-width:600px){nav{flex-wrap:wrap;gap:.6rem 1rem;font-size:9px;padding:.8rem .6rem}.gt-sl label{font-size:8px;grid-template-columns:6.4em 1fr;gap:.5rem}.gt-dl button{font-size:8px}.rm{padding:1rem .8rem 1.4rem}.rm-pct{font-size:13px}.pips i{width:22px;height:22px}.rm-feed{width:100%}}
+/* ---------- WALLET PICKER (wallets.js) ---------- */
+.wpm{position:fixed;inset:0;z-index:70;background:rgba(10,0,6,.94);display:flex;align-items:center;justify-content:center;padding:1rem}
+.wpbox{width:min(380px,100%);max-height:calc(100vh - 2rem);overflow:auto;background:var(--bk2);border:3px solid var(--pk);box-shadow:0 0 0 4px var(--bk),0 0 0 6px var(--mg),6px 6px 0 6px #2a0614;padding:1.1rem;clip-path:polygon(0 0,94% 0,100% 5%,100% 100%,6% 100%,0 95%)}
+.wphead{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-bottom:.9rem}
+.wptitle{font-family:'Press Start 2P';font-size:11px;letter-spacing:.15em;color:#fff;text-shadow:2px 0 var(--pk),-2px 0 var(--mg)}
+.wpx{padding:.45rem .6rem;font-size:9px;color:#b9a9b1;border-color:#5a2a40}
+.wpbody{display:flex;flex-direction:column;align-items:stretch;gap:.5rem;text-align:left}
+.wpsec{font-family:'Press Start 2P';font-size:8px;letter-spacing:.15em;color:#8a6a78;margin-top:.5rem}
+.wplist{display:flex;flex-direction:column;gap:.5rem}
+.wpw{display:flex;align-items:center;gap:.8rem;width:100%;padding:.75rem .8rem;font-family:'Press Start 2P';font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-align:left;text-decoration:none;
+  background:var(--bk);color:var(--pk);border:2px solid var(--mg);box-shadow:3px 3px 0 #2a0614;cursor:pointer}
+.wpw:hover,.wpw:focus-visible{background:var(--pk);color:var(--bk);border-color:var(--pk);outline:none}
+.wpw img{width:26px;height:26px;flex:none;image-rendering:auto;background:#fff1;border-radius:4px}
+.wpdot{width:26px;height:26px;flex:none;border:2px dashed currentColor;display:inline-block}
+.wpw.wpqr .wpdot{border-style:solid;background:repeating-linear-gradient(90deg,currentColor 0 3px,transparent 3px 6px),repeating-linear-gradient(0deg,currentColor 0 3px,transparent 3px 6px);background-blend-mode:difference;opacity:.8}
+.wpw.wpgo{background:var(--pk);color:var(--bk);border-color:var(--pk)}
+.wpnote{font-family:'Press Start 2P';font-size:8px;line-height:1.8;color:#b9a9b1}
+.wpget{font-family:'Press Start 2P';font-size:8px;color:var(--pk);margin-top:.4rem;text-align:center}
+.wpbody .wcqr{align-self:center;border:2px solid var(--mg);line-height:0}
+.wpcopy,.wpback{font-size:9px}
+.wpback{color:#b9a9b1;border-color:#5a2a40}

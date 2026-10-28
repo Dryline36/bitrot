@@ -136,59 +136,23 @@ function glitch(src,p,f,seed,ctx){
     const k=dead?1.6:r;const p={drift:Math.min(100,k*70),split:Math.min(100,6+k*55),tear:Math.min(100,k*65),melt:Math.min(100,k*80),static:Math.min(100,3+k*(dead?75:40))};
     cx.putImageData(glitch(base,p,fi%8,seed+(dead?fi:0)),0,0)})(0);
 
-  /* wallets: injected (EIP-6963 / window.ethereum) or WalletConnect */
-  const isAndroid=()=>/Android/i.test(navigator.userAgent),isIOS=()=>/iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-  const isMobile=()=>isAndroid()||isIOS()||/Mobi/i.test(navigator.userAgent);
-  const userRejected=e=>e?.code===4001||e?.code===5000||/reject|denied|cancel/i.test(e?.message||'');
-  const ann=[];addEventListener('eip6963:announceProvider',e=>{if(e?.detail?.provider&&!ann.some(a=>a.provider===e.detail.provider))ann.push(e.detail)});
-  const ask=()=>{try{dispatchEvent(new Event('eip6963:requestProvider'))}catch(e){}};ask();
-  function pick(){const mm=ann.find(a=>/^io\.metamask/.test(a.info?.rdns||''));if(mm)return mm.provider;const w=window.ethereum;
-    if(w&&Array.isArray(w.providers)&&w.providers.length)return w.providers.find(p=>p.isMetaMask&&!p.isBraveWallet)||w.providers[0];return w||ann[0]?.provider||null}
-  async function findInjected(ms=2500){let p=pick();if(p)return p;ask();const t0=Date.now();while(Date.now()-t0<ms){await sleep(150);p=pick();if(p)return p}return null}
-  async function acctNow(p){try{const a=await p.request({method:'eth_accounts'});return a?.[0]&&/^0x[0-9a-fA-F]{40}$/.test(a[0])?a[0]:null}catch(e){return null}}
-  async function reqAcct(p){const have=await acctNow(p);if(have)return have;let res=null,err=null;
-    p.request({method:'eth_requestAccounts'}).then(a=>{res=a?.[0]||null;if(!res)err=new Error('No account shared')},e=>{err=e});
-    const t0=Date.now();while(Date.now()-t0<60000){await sleep(500);if(res)return res;if(err&&err.code!==-32002)throw err;const a=await acctNow(p);if(a)return a}
-    throw new Error('The wallet did not respond.')}
-  let wcMod=null,wcProv=null;
-  const loadWC=()=>wcMod||(wcMod=Promise.all([import('https://esm.sh/@walletconnect/ethereum-provider@2.26.0?bundle'),import('https://esm.sh/uqr@0.1.2')])
-    .then(([w,q])=>({EP:w.EthereumProvider||w.default?.EthereumProvider,svg:q.renderSVG})).catch(e=>{wcMod=null;throw new Error('Could not load WalletConnect.')}));
-  async function wcP(){if(!wcProv){const m=await loadWC();wcProv=await m.EP.init({projectId:CFG.WALLETCONNECT_PROJECT_ID,showQrModal:false,chains:[1],optionalChains:[1,8453],
-    methods:['personal_sign','eth_accounts'],optionalMethods:[],events:['accountsChanged','chainChanged'],optionalEvents:['disconnect'],
-    metadata:{name:'BIT ROT',description:'BIT ROT: ROT METER. Signing is free (no gas).',url:location.origin,icons:[new URL('assets/hero.gif',location.href).href]}})}return wcProv}
-  async function wcAcct(p,ms=6000){const t0=Date.now();while(true){const a=p.accounts?.[0];if(a)return a;
-    for(const ns of Object.values(p.session?.namespaces||{}))for(const acc of ns?.accounts||[]){const x=String(acc).split(':').pop();if(/^0x[0-9a-fA-F]{40}$/.test(x))return x}
-    if(Date.now()-t0>ms)return null;await sleep(400)}}
-  const mmLink=u=>{const e=encodeURIComponent(u);return isAndroid()?`metamask://wc?uri=${e}`:`https://metamask.app.link/wc?uri=${e}`};
-  function openLink(h){if(!h)return;if(/^https?:/i.test(h)){const a=document.createElement('a');a.href=h;a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}else location.href=h}
-  function walletReturn(p){const r=p?.session?.peer?.metadata?.redirect,mm=/metamask/i.test(p?.session?.peer?.metadata?.name||'');
-    if(isAndroid())return r?.native||(mm?'metamask://':'');if(isIOS())return r?.universal||r?.native||(mm?'https://metamask.app.link':'');return ''}
-  async function connectWC(){status('LOADING WALLETCONNECT...');const p=await wcP(),m=await loadWC();
-    if(p.session){const a=await wcAcct(p,1500);if(a)return [p,a];try{await p.disconnect()}catch(e){}}
-    const onUri=u=>{$('rmwcqr').innerHTML=m.svg(u,{ecc:'M',border:2,pixelSize:5,whiteColor:'#f4e7ea',blackColor:'#0a0a0a'});$('rmwcmm').href=mmLink(u);$('rmwcm').hidden=false;if(isMobile())openLink(mmLink(u))};
-    p.on?.('display_uri',onUri);try{await p.connect()}catch(e){if(!p.session)throw e}finally{p.removeListener?.('display_uri',onUri);$('rmwcm').hidden=true}
-    const a=await wcAcct(p);if(!a)throw new Error('Approved, but no account came back. Tap again.');return [p,a]}
-  $('rmwcx').onclick=()=>{$('rmwcm').hidden=true;try{wcProv?.disconnect()}catch(e){}};
-  const dappLink=()=>'https://metamask.app.link/dapp/'+location.host+location.pathname+'#meter';
-  function noWallet(){const wc=CFG.WALLETCONNECT_PROJECT_ID?'<button type="button" class="connect wc" id="rmnwwc">WALLETCONNECT</button>':'';
-    status(isMobile()?'NO WALLET IN THIS BROWSER. OPEN THE SITE IN METAMASK, OR USE WALLETCONNECT:<div class="wopts"><a class="connect" href="'+dappLink()+'">OPEN IN METAMASK</a>'+wc+'</div>'
-      :'NO BROWSER WALLET FOUND. UNLOCK METAMASK AND RELOAD, OR USE WALLETCONNECT:<div class="wopts">'+wc+'</div>');
-    const b=$('rmnwwc');if(b)b.onclick=()=>connect('wc')}
+  /* wallets: shared picker in wallets.js */
+  const W=window.BRWallets,isMobile=W.isMobile,userRejected=W.userRejected;
   function setWallet(a){wallet=a?a.toLowerCase():null;try{wallet?localStorage.setItem(KEY,wallet):localStorage.removeItem(KEY)}catch(e){}
-    $('rmconnect').hidden=!!wallet;$('rmconnectwc').hidden=!!wallet||!CFG.WALLETCONNECT_PROJECT_ID;$('rmaddr').hidden=!wallet;$('rmdisc').hidden=!wallet;if(wallet)$('rmaddr').textContent=short(wallet);paint()}
-  async function connect(kind){try{let p,a;
-      if(kind==='wc'){[p,a]=await connectWC()}else{status('LOOKING FOR YOUR WALLET...');p=await findInjected();if(!p){noWallet();return null}status('APPROVE THE CONNECTION IN YOUR WALLET');a=await reqAcct(p)}
-      prov={p,kind};p.on?.('accountsChanged',acc=>{if(wallet&&acc?.[0]&&acc[0].toLowerCase()!==wallet){prov=null;setWallet(acc[0]);load()}});
-      setWallet(a);status('CONNECTED. FEED IT ONCE A DAY.');await load();return prov}
+    $('rmconnect').hidden=!!wallet;$('rmaddr').hidden=!wallet;$('rmdisc').hidden=!wallet;if(wallet)$('rmaddr').textContent=short(wallet);paint()}
+  async function connect(){try{const r=await W.connect({status,hash:'#meter'});if(!r)return null;const p=r.p;
+      prov={p,kind:r.kind};p.on?.('accountsChanged',acc=>{if(wallet&&acc?.[0]&&acc[0].toLowerCase()!==wallet){prov=null;setWallet(acc[0]);load()}});
+      setWallet(r.a);status('CONNECTED. FEED IT ONCE A DAY.');await load();return prov}
     catch(e){status(userRejected(e)?'REQUEST CANCELLED IN WALLET.':'COULD NOT CONNECT: '+String(e?.message||e).slice(0,80).toUpperCase());return null}}
-  $('rmconnect').onclick=()=>connect('injected');$('rmconnectwc').onclick=()=>connect('wc');
-  $('rmdisc').onclick=()=>{try{prov?.kind==='wc'&&wcProv?.disconnect()}catch(e){}prov=null;setWallet(null);status('DISCONNECTED.')};
+  $('rmconnect').onclick=()=>connect();
+  $('rmdisc').onclick=()=>{try{prov?.kind==='wc'&&W.wcDisconnect()}catch(e){}prov=null;setWallet(null);status('DISCONNECTED.')};
   const ERR={already_fed:'ALREADY FED TODAY. COME BACK AFTER 00:00 UTC.',message_expired:'THAT SIGNATURE EXPIRED. TRY AGAIN.',bad_signature:'SIGNATURE DID NOT MATCH THIS WALLET.',bad_origin:'FEEDING IS NOT ALLOWED FROM THIS ADDRESS.',server_error:'THE ROT CHOKED. TRY AGAIN.'};
   $('rmfeed').onclick=async()=>{if(feeding||!wallet)return;feeding=true;paint();
-    try{if(!prov){const p=await findInjected(800),a=p&&await acctNow(p);if(a&&a.toLowerCase()===wallet)prov={p,kind:'injected'};else if(!await connect(wcProv?.session?'wc':(p?'injected':'wc')))return}
+    try{if(!prov){const p=W.wcSession?null:await W.remembered(800),a=p&&await W.acctNow(p);if(a&&a.toLowerCase()===wallet)prov={p,kind:'injected'};
+        else if(W.wcSession&&W.wc.accounts?.[0]?.toLowerCase()===wallet)prov={p:W.wc,kind:'wc'};else if(!await connect())return}
       const day=new Date(Date.now()+off).toISOString().slice(0,10);
       const message=`BIT ROT: FEED THE ROT\nWallet: ${wallet}\nDay: ${day}\nNonce: ${hex(crypto.getRandomValues(new Uint8Array(12)))}\nIssued At: ${new Date(Date.now()+off).toISOString()}\n\nFree signature. No transaction, no gas.`;
-      status('SIGN THE FREE MESSAGE IN YOUR WALLET (NO GAS)');if(prov.kind==='wc'&&isMobile())openLink(walletReturn(prov.p));
+      status('SIGN THE FREE MESSAGE IN YOUR WALLET (NO GAS)');if(prov.kind==='wc'&&isMobile())W.openLink(W.walletReturn(prov.p));
       const signature=await prov.p.request({method:'personal_sign',params:['0x'+hex(new TextEncoder().encode(message)),wallet]});
       status('FEEDING...');const r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message,signature})});const b=await r.json().catch(()=>({}));
       if(typeof b.level==='number'){st=b;off=Date.parse(b.server_time)-Date.now()}

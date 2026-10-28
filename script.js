@@ -97,38 +97,9 @@ async function hasWalletWon(address){const s=await api('status');state=s;return 
 /** The win itself is recorded server-side during the spin. This only attaches the optional X handle. */
 async function recordWin(data){if(!data.x)return {ok:true};const r=await api('handle',{x_handle:data.x});return {ok:!!r.ok,error:r.error}}
 
-/* --- wallets: injected (EIP-6963 + window.ethereum) --- */
-const announced=[];
-addEventListener('eip6963:announceProvider',e=>{if(e?.detail?.provider&&!announced.some(a=>a.provider===e.detail.provider))announced.push(e.detail)});
-function ask6963(){try{dispatchEvent(new Event('eip6963:requestProvider'))}catch(e){}}
-ask6963();
-function pickInjected(){
-  const mm=announced.find(a=>a.info?.rdns==='io.metamask'||/^io\.metamask/.test(a.info?.rdns||''));if(mm)return mm.provider;
-  const w=window.ethereum;
-  if(w&&Array.isArray(w.providers)&&w.providers.length)return w.providers.find(p=>p.isMetaMask&&!p.isBraveWallet)||w.providers[0];
-  if(w)return w;
-  return announced[0]?.provider||null}
-/** Find an injected wallet, waiting up to ~3s for late injection (ethereum#initialized / EIP-6963 announce). */
-async function findInjected(ms=3000){
-  let p=pickInjected();if(p)return p;ask6963();
-  return new Promise(res=>{let done=false;const fin=()=>{if(done)return;done=true;clearInterval(iv);removeEventListener('ethereum#initialized',fin);res(pickInjected())};
-    addEventListener('ethereum#initialized',fin,{once:true});
-    const iv=setInterval(()=>{if(pickInjected())fin()},150);setTimeout(fin,ms)})}
-const MM_DAPP='https://metamask.app.link/dapp/play.prixville.com/bitrot/';
-const userRejected=e=>e?.code===4001||e?.code===5000||/reject|denied|cancel/i.test(e?.message||'');
-async function accountsNow(p){try{const a=await p.request({method:'eth_accounts'});return a?.[0]&&/^0x[0-9a-fA-F]{40}$/.test(a[0])?a[0]:null}catch(e){return null}}
-/** Connect, robust to wallets that approve but never resolve, or report "already pending" (-32002). */
-async function requestAccount(p){
-  const have=await accountsNow(p);if(have)return have;
-  for(let attempt=0;attempt<2;attempt++){
-    let err=null,res=null;p.request({method:'eth_requestAccounts'}).then(a=>{res=a?.[0]||null;if(!res)err=new Error('No account shared')},e=>{err=e});
-    const t0=Date.now();
-    while(Date.now()-t0<45000){await sleep(600);if(res)return res;if(err){if(userRejected(err))throw err;if(err.code!==-32002)break}
-      const a=await accountsNow(p);if(a)return a;if(Date.now()-t0>8000)status('STILL WAITING FOR THE WALLET...')}
-    status('THE WALLET DID NOT ANSWER. ASKING AGAIN...');
-  }
-  const a=await accountsNow(p);if(a)return a;throw new Error('The wallet did not respond.');
-}
+/* --- wallets: shared picker in wallets.js (EIP-6963 list, mobile wallet apps, WalletConnect) --- */
+const W=window.BRWallets;
+const userRejected=W.userRejected;
 function buildMessage(address){const n=Date.now();
   return `BIT ROT WL spin\nWallet: ${address}\nNonce: ${hex(crypto.getRandomValues(new Uint8Array(12)))}\nIssued At: ${new Date(n).toISOString()}\nExpires: ${new Date(n+SESSION_TTL).toISOString()}\n\nFree signature. No transaction, no gas.`}
 async function signIn(p,address,onWait){
@@ -141,63 +112,20 @@ async function signIn(p,address,onWait){
 function loadSession(){try{const s=JSON.parse(localStorage.getItem(SESS)||'null');return s&&s.exp>Date.now()+60e3?s:null}catch(e){return null}}
 function clearSession(){session=null;try{localStorage.removeItem(SESS)}catch(e){}}
 
-/* --- WalletConnect (mobile): lazy-loaded from an ESM CDN on first tap ---
-   Requires the site's final domain in the Reown Cloud project's allowed domains. */
-let wcMod=null,wcProv=null;
-async function loadWC(){
-  if(!wcMod)wcMod=Promise.all([import('https://esm.sh/@walletconnect/ethereum-provider@2.26.0?bundle'),import('https://esm.sh/uqr@0.1.2')])
-    .then(([w,q])=>({EthereumProvider:w.EthereumProvider||w.default?.EthereumProvider,renderSVG:q.renderSVG})).catch(e=>{wcMod=null;throw new Error('Could not load WalletConnect.')});
-  return wcMod;
-}
-async function wcProvider(){
-  if(!wcProv){const m=await loadWC();wcProv=await m.EthereumProvider.init({projectId:CFG.WALLETCONNECT_PROJECT_ID,showQrModal:false,chains:[1],optionalChains:[1,8453],
-    methods:['personal_sign','eth_accounts'],optionalMethods:[],events:['accountsChanged','chainChanged'],optionalEvents:['disconnect'],
-    metadata:{name:'BIT ROT',description:'BIT ROT: SPIN THE ROT. Signing is free (no gas).',url:location.origin,icons:[new URL('assets/hero.gif',location.href).href]}});
-    wcProv.on?.('disconnect',()=>{});}
-  return wcProv;
-}
-async function wcAccount(p,waitMs=6000){const t0=Date.now();
-  while(true){const a=p.accounts?.[0];if(a)return a;
-    const ns=p.session?.namespaces||{};for(const k of Object.keys(ns))for(const acc of ns[k]?.accounts||[]){const x=String(acc).split(':').pop();if(/^0x[0-9a-fA-F]{40}$/.test(x))return x}
-    if(Date.now()-t0>waitMs)return null;await sleep(400)}}
-const mmLink=uri=>{const e=encodeURIComponent(uri);return isAndroid()?`metamask://wc?uri=${e}`:`https://metamask.app.link/wc?uri=${e}`};
-function walletReturn(p){const r=p?.session?.peer?.metadata?.redirect;const mm=/metamask/i.test(p?.session?.peer?.metadata?.name||'');
-  if(isAndroid())return r?.native||(mm?'metamask://':'');if(isIOS())return r?.universal||r?.native||(mm?'https://metamask.app.link':'');return ''}
-function openLink(h){if(!h)return;if(/^https?:/i.test(h)){const a=document.createElement('a');a.href=h;a.rel='noopener';document.body.appendChild(a);a.click();a.remove()}else location.href=h}
-async function connectWC(){
-  status('LOADING WALLETCONNECT...');
-  const p=await wcProvider();const m=await loadWC();
-  if(p.session){const prev=await wcAccount(p,1500);if(prev)return [p,prev];try{await p.disconnect()}catch(e){}}
-  const onUri=uri=>{$('wcqr').innerHTML=m.renderSVG(uri,{ecc:'M',border:2,pixelSize:5,whiteColor:'#f4e7ea',blackColor:'#0a0a0a'});$('wcmm').href=mmLink(uri);$('wcm').hidden=false;if(isMobile())openLink(mmLink(uri))};
-  p.on?.('display_uri',onUri);
-  try{await p.connect()}catch(e){if(!p.session)throw e}finally{p.removeListener?.('display_uri',onUri);$('wcm').hidden=true}
-  const a=await wcAccount(p);if(!a)throw new Error('Approved, but no account came back. Tap again.');
-  return [p,a];
-}
-$('wcx').onclick=()=>{$('wcm').hidden=true;try{wcProv?.disconnect()}catch(e){}};
-
 /* --- connect flow --- */
-function noWallet(){
-  const wc=CFG.WALLETCONNECT_PROJECT_ID?'<button type="button" class="connect wc" id="nwwc">WALLETCONNECT</button>':'';
-  status(isMobile()
-    ?'NO WALLET IN THIS BROWSER. OPEN THE SITE INSIDE METAMASK, OR USE WALLETCONNECT:<div class="wopts"><a class="connect" href="'+MM_DAPP+'">OPEN IN METAMASK</a>'+wc+'</div>'
-    :'NO BROWSER WALLET DETECTED. UNLOCK/ENABLE THE METAMASK EXTENSION AND RELOAD, OR USE WALLETCONNECT:<div class="wopts">'+wc+'<a class="connect wc" href="https://metamask.io/download/" target="_blank" rel="noopener">GET METAMASK</a></div>');
-  const b=document.getElementById('nwwc');if(b)b.onclick=()=>connect('wc')}
 function status(t,cls=''){$('walmsg').innerHTML=t;$('walmsg').className='walmsg'+(cls?' '+cls:'')}
-async function connect(kind){
+async function connect(){
   try{
-    let p,a;
-    if(kind==='wc'){if(!CFG.WALLETCONNECT_PROJECT_ID)return;[p,a]=await connectWC()}
-    else{status('LOOKING FOR YOUR WALLET...');p=await findInjected();if(!p){noWallet();return}
-      status('APPROVE THE CONNECTION IN YOUR WALLET');a=await requestAccount(p)}
+    const r=await W.connect({status,hash:'#slots'});if(!r)return;
+    const p=r.p,a=r.a,kind=r.kind;
     provider=p;
-    await signIn(p,a,()=>{status('SIGN THE FREE MESSAGE IN YOUR WALLET (NO GAS)');if(kind==='wc'&&isMobile())openLink(walletReturn(p))});
+    await signIn(p,a,()=>{status('SIGN THE FREE MESSAGE IN YOUR WALLET (NO GAS)');if(kind==='wc'&&W.isMobile())W.openLink(W.walletReturn(p))});
     p.on?.('accountsChanged',acc=>{if(session&&acc?.[0]&&acc[0].toLowerCase()!==session.address)disconnect('ACCOUNT CHANGED. RECONNECT.')});
     await afterSignIn();
   }catch(e){status(userRejected(e)?'REQUEST CANCELLED IN WALLET.':'COULD NOT CONNECT: '+String(e?.message||e).slice(0,80).toUpperCase())}
 }
 async function afterSignIn(){
-  $('connect').hidden=true;$('connectwc').hidden=true;$('addr').hidden=false;$('addr').textContent=short(session.address);$('disc').hidden=false;
+  $('connect').hidden=true;$('addr').hidden=false;$('addr').textContent=short(session.address);$('disc').hidden=false;
   status('CHECKING WALLET...');
   try{await hasWalletWon(session.address)}catch(e){status('SERVER UNREACHABLE. TRY AGAIN SOON.');return refresh()}
   if(state.already_won){status('THIS WALLET ALREADY HAS WL. FUN SPINS ONLY, NO PRIZE.','has');if(state.claim_code)showClaim(state.claim_code)}
@@ -205,10 +133,9 @@ async function afterSignIn(){
   refresh();
 }
 function disconnect(t){clearSession();state={already_won:false,spins_left:0};
-  try{wcProv?.session&&wcProv.disconnect()}catch(e){}
-  $('connect').hidden=false;$('connectwc').hidden=!CFG.WALLETCONNECT_PROJECT_ID;$('addr').hidden=true;$('disc').hidden=true;winBox.hidden=true;status(t||'');refresh()}
-$('connect').onclick=()=>connect('injected');$('connectwc').onclick=()=>connect('wc');$('disc').onclick=()=>disconnect('DISCONNECTED.');
-$('connectwc').hidden=!CFG.WALLETCONNECT_PROJECT_ID;
+  W.wcDisconnect();
+  $('connect').hidden=false;$('addr').hidden=true;$('disc').hidden=true;winBox.hidden=true;status(t||'');refresh()}
+$('connect').onclick=()=>connect();$('disc').onclick=()=>disconnect('DISCONNECTED.');
 
 function refresh(){
   if(!session){spinBtn.disabled=true;spinBtn.textContent='SPIN';left.textContent='CONNECT A WALLET TO SPIN';return}

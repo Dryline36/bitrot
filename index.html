@@ -16,7 +16,7 @@
 <div class="car" id="car"><button class="arw prev" aria-label="Previous">&lt;</button><div class="row" data-dir="1"><div class="track"></div></div><div class="row" data-dir="-1"><div class="track"></div></div><button class="arw next" aria-label="Next">&gt;</button></div></section>
 <section id="slots" hidden><h2 class="glitch" data-t="SPIN THE ROT">SPIN THE ROT</h2>
 <div class="cab"><div class="cab-top">BIT ROT // WL MACHINE</div><div class="screen"><div class="reels"><div class="reel"><img alt=""></div><div class="reel"><img alt=""></div><div class="reel"><img alt=""></div></div><div class="payline"></div></div>
-<div class="wal"><button id="connect" class="connect">CONNECT WALLET</button><button id="connectwc" class="connect wc">WALLETCONNECT</button><span id="addr" class="addr" hidden></span><button id="disc" class="discbtn" hidden>DISCONNECT</button></div><p id="walmsg" class="walmsg"></p>
+<div class="wal"><button id="connect" class="connect">CONNECT WALLET</button><span id="addr" class="addr" hidden></span><button id="disc" class="discbtn" hidden>DISCONNECT</button></div><p id="walmsg" class="walmsg"></p>
 <p id="slotmsg" class="slotmsg">MATCH 3 TO WIN A WL SPOT</p><button id="spin" class="spin">SPIN</button><p id="spinsleft" class="spinsleft"></p></div>
 <div id="win" class="win" hidden><h3 class="glitch" data-t="YOU WON A WL SPOT">YOU WON A WL SPOT</h3>
 <form id="wlform"><label>X HANDLE (OPTIONAL)<input name="x" maxlength="16" pattern="@?[A-Za-z0-9_]{1,15}" placeholder="@yourhandle"></label><p class="winwal">WALLET: <b id="winaddr"></b></p><button type="submit">SAVE HANDLE</button></form>
@@ -33,17 +33,15 @@
 <div class="rm" id="rm"><div class="rm-screen"><canvas id="rmc" width="384" height="384" aria-hidden="true"></canvas><div class="rm-dead">FLATLINED</div></div>
 <div class="rm-bar" aria-label="Rot meter"><div class="rm-fill" id="rmfill"></div><span class="rm-pct" id="rmpct">--%</span></div>
 <p class="rm-info" id="rminfo">READING THE ROT...</p>
-<div class="wal rm-wal"><button id="rmconnect" class="connect" type="button">CONNECT WALLET</button><button id="rmconnectwc" class="connect wc" type="button">WALLETCONNECT</button><span id="rmaddr" class="addr" hidden></span><button id="rmdisc" class="discbtn" type="button" hidden>DISCONNECT</button></div>
+<div class="wal rm-wal"><button id="rmconnect" class="connect" type="button">CONNECT WALLET</button><span id="rmaddr" class="addr" hidden></span><button id="rmdisc" class="discbtn" type="button" hidden>DISCONNECT</button></div>
 <p id="rmmsg" class="walmsg"></p>
 <button id="rmfeed" class="spin rm-feed" type="button" data-sfx disabled>FEED THE ROT</button>
 <div class="rm-streak"><p id="rmstreak">YOUR STREAK: 0/7</p><div class="pips" id="rmpips"></div><p id="rmnext" class="spinsleft"></p><p id="rmwl" class="rm-wl" hidden>WL LOCKED IN</p></div>
 <p class="disc">One feed per wallet per day (resets 00:00 UTC). Miss a day and your streak resets. Free signature, no gas.</p></div></section>
-<div id="rmwcm" class="wcm rmwcm" hidden><div class="wcbox"><p>SCAN WITH YOUR WALLET</p><div id="rmwcqr" class="wcqr"></div><a id="rmwcmm" class="btn" href="#">OPEN METAMASK</a><button id="rmwcx" type="button">CANCEL</button></div></div>
 <section id="rep" class="box"><span class="soon">COMING SOON</span><h2 class="glitch" data-t="REP CARD">REP CARD</h2>
 <p>A holder reputation score that tracks how you actually show up: hold time, sales, profits, and X support. Other projects can plug into it for whitelists.</p>
 <div class="stats"><div>HOLD TIME<b>???</b></div><div>SALES<b>???</b></div><div>PROFITS<b>???</b></div><div>X SUPPORT<b>???</b></div></div></section>
 <footer><a class="btn" href="https://x.com/drylinemix" target="_blank" rel="noopener">X @DRYLINEMIX</a><a class="btn" href="#">DRIP MARKET</a><a class="btn" href="#">OPENSEA</a><p>BIT ROT &copy; 2026</p></footer>
-<div id="wcm" class="wcm" hidden style="display:none"><div class="wcbox"><p>SCAN WITH YOUR WALLET</p><div id="wcqr"></div><a id="wcmm" class="btn" href="#">OPEN METAMASK</a><button id="wcx">CANCEL</button></div></div>
 <div id="lb" class="lb"><img alt=""><p></p></div>
 <script>window.BITROT_CONFIG={API:"https://viennqvafgtvlniwwrkh.supabase.co/functions/v1/bitrot-spin",ANON:"sb_publishable_RivvE73MxKVlMds79xI5fA_uXU1K0zS",WALLETCONNECT_PROJECT_ID:"ca594227aa82265b4d7b52bce881d263",ROT_API:"https://viennqvafgtvlniwwrkh.supabase.co/functions/v1/bitrot-rot"};</script>
-<script src="audio.js"></script><script src="script.js"></script><script src="rot.js"></script></body></html>
+<script src="audio.js"></script><script src="wallets.js"></script><script src="script.js"></script><script src="rot.js"></script></body></html>
