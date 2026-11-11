@@ -1,0 +1,90 @@
+/* Bible page. Theme tokens, type, and chrome come from /style.css. */
+.bible-page{font-synthesis:none}
+.bible-page h1,.bible-page h2,.bible-page h3,.bible-page h4,
+.bible-page nav,.bible-page .btn,.bible-page .eyebrow,.bible-page .rubric,.bible-page .toc-books a,.bible-page .saint-card span{
+  font-weight:400;
+}
+.bible-page img{
+  image-rendering:crisp-edges;
+  image-rendering:pixelated;
+  filter:none;
+  animation:none;
+  transform:none;
+}
+
+.skip{position:absolute;left:-999px;top:0;z-index:80;font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:.12em;text-decoration:none;background:var(--pk);color:var(--bk);padding:.7rem .8rem}
+.skip:focus{left:.6rem;top:.6rem}
+
+nav a[aria-current="page"]{color:var(--bk);background:var(--pk)}
+
+.bible-hero{max-width:1100px;margin:0 auto;padding:2.2rem 1rem 0;text-align:center}
+.eyebrow{display:inline-block;margin-bottom:1.1rem;font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:.22em;color:var(--pk);text-decoration:none}
+.eyebrow:hover{background:var(--pk);color:var(--bk)}
+.bible-hero h1{font-size:clamp(20px,4.4vw,46px);letter-spacing:.08em;line-height:1.5;max-width:14em;margin:0 auto .9rem;text-wrap:balance}
+.bible-hero .tag{margin:0 0 1.5rem;min-height:1.3em}
+.bible-hero .banner{margin:0}
+
+.bible-status{font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:.16em;text-align:center;color:var(--pk);padding:2rem 1rem}
+.bible-status[hidden]{display:none}
+
+.banner{margin:0 0 1.5rem;padding:8px}
+.banner img{display:block;width:100%;height:auto;background:#000;border:2px solid var(--pk);outline:2px dashed var(--mg);outline-offset:6px}
+#hero-banner:empty{aspect-ratio:16/9;background:#050003;border:2px dashed var(--mg);padding:0}
+
+.box.bible-intro,.box.bible-toc{
+  clip-path:polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,28px 100%,0 calc(100% - 28px));
+}
+.bible-intro{margin-top:2rem}
+.bible-toc{max-width:1100px}
+.toc-books{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.6rem;margin:0 0 .4rem}
+.toc-books a{display:block;font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:.08em;line-height:1.7;text-transform:uppercase;text-decoration:none;color:var(--pk);border:2px dashed var(--mg);padding:.85rem .8rem}
+.toc-books a:hover,.toc-books a:focus-visible{background:var(--pk);color:var(--bk);border-style:solid;border-color:var(--pk);outline:none}
+.toc-label{margin:1.7rem 0 .9rem}
+
+.saint-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7rem}
+.saint-card{display:block;min-width:0;background:var(--bk2);border:2px dashed var(--mg);padding:.4rem;text-decoration:none;color:var(--pk)}
+.saint-card img{display:block;width:100%;height:auto;background:#000}
+.saint-card span{display:block;margin-top:.45rem;font-family:'Press Start 2P',monospace;font-size:8px;letter-spacing:.05em;line-height:1.65;text-transform:uppercase;color:var(--pk)}
+.saint-card:hover,.saint-card:focus-visible{border-style:solid;border-color:var(--pk);outline:none}
+
+.book h2,.saint-chapter h3,.prose h3,.rubric{scroll-margin-top:.8rem}
+.bible-page h3{font-family:'Press Start 2P',monospace;font-size:clamp(11px,2vw,15px);letter-spacing:.1em;line-height:1.65;text-transform:uppercase;color:#fff;text-shadow:2px 0 var(--pk),-2px 0 var(--mg);margin:0 0 1rem}
+.prose h3{margin:2.2rem 0 1rem}
+.prose{max-width:68ch}
+.prose p{margin:0 0 1rem}
+.prose ul,.prose ol{margin:0 0 1.1rem 1.25rem}
+.prose li{margin:.4rem 0}
+.prose strong{font-weight:400;color:#fff}
+.prose em{font-style:normal;color:var(--pk2)}
+.prose a{color:var(--pk);text-decoration:none;border-bottom:2px solid var(--mg)}
+.prose a:hover,.prose a:focus-visible{background:var(--pk);color:var(--bk);border-bottom-color:var(--pk)}
+.lede{font-size:26px;color:var(--pk2);margin-bottom:1.1rem}
+.rubric{font-family:'Press Start 2P',monospace;font-size:10px;letter-spacing:.12em;line-height:1.7;text-transform:uppercase;color:var(--pk);margin:1.5rem 0 .65rem}
+
+.saint{display:grid;grid-template-columns:minmax(200px,340px) minmax(0,1fr);gap:1.2rem 1.8rem;align-items:start}
+.saint-art{position:relative;width:min(100%,340px);aspect-ratio:1;margin:10px;background:#000;border:2px solid var(--pk);outline:2px dashed var(--mg);outline-offset:6px;line-height:0}
+.saint-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.saint-art .gif{opacity:0}
+.saint-art.is-ready .gif{opacity:1}
+
+@media(max-width:900px){
+  .saint-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .bible-hero{padding-top:1.4rem}
+  .saint{grid-template-columns:1fr;justify-items:center}
+  .saint-copy{width:100%}
+  .saint-art{width:min(78vw,300px)}
+  .lede{font-size:22px}
+}
+@media(max-width:600px){
+  .saint-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+  .saint-card span{font-size:7px}
+  .toc-books{grid-template-columns:1fr}
+  .banner{padding:6px}
+  .banner img{outline-offset:4px}
+  .saint-art{outline-offset:4px}
+}
+@media(prefers-reduced-motion:reduce){
+  .saint-art .gif{display:none}
+}

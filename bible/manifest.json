@@ -1,0 +1,488 @@
+{
+  "saints": [
+    {
+      "heading": "### The Book of the Robot",
+      "name": "Robot",
+      "token": 1,
+      "collection_file": "01_robot.gif",
+      "slug": "robot",
+      "gif": "saints/robot.gif",
+      "png": "saints/robot.png",
+      "alt": "Robot, the First Saint: a rusted machine skull with dead circuit eyes and a short antenna"
+    },
+    {
+      "heading": "### The Book of the Ghoul",
+      "name": "Ghoul",
+      "token": 2,
+      "collection_file": "02_ghoul.gif",
+      "slug": "ghoul",
+      "gif": "saints/ghoul.gif",
+      "png": "saints/ghoul.png",
+      "alt": "Ghoul, the Second Saint: a melting lime face whose grin will not stay put"
+    },
+    {
+      "heading": "### The Book of the Whale",
+      "name": "Whale",
+      "token": 3,
+      "collection_file": "03_whale.gif",
+      "slug": "whale",
+      "gif": "saints/whale.gif",
+      "png": "saints/whale.png",
+      "alt": "Whale, the Third Saint: a cracked visor, a stitched mouth, and candles stuck to the crown"
+    },
+    {
+      "heading": "### The Book of the Wraith",
+      "name": "Wraith",
+      "token": 4,
+      "collection_file": "04_wraith.gif",
+      "slug": "wraith",
+      "gif": "saints/wraith.gif",
+      "png": "saints/wraith.png",
+      "alt": "Wraith, the Fourth Saint: a thinning purple leer, most of the signal already gone"
+    },
+    {
+      "heading": "### The Book of the Imp",
+      "name": "Imp",
+      "token": 5,
+      "collection_file": "05_imp.gif",
+      "slug": "imp",
+      "gif": "saints/imp.gif",
+      "png": "saints/imp.png",
+      "alt": "Imp, the Fifth Saint: a blue frozen grin, a split skull, and a third eye that showed up uninvited"
+    },
+    {
+      "heading": "### The Book of the Plague Doctor",
+      "name": "Plague Doctor",
+      "token": 6,
+      "collection_file": "06_plague_doctor.gif",
+      "slug": "plague-doctor",
+      "gif": "saints/plague-doctor.gif",
+      "png": "saints/plague-doctor.png",
+      "alt": "Plague Doctor, the Sixth Saint: a beaked mask, fogged lenses, and a cure that makes you worse"
+    },
+    {
+      "heading": "### The Book of the Mantis",
+      "name": "Mantis",
+      "token": 7,
+      "collection_file": "07_mantis.gif",
+      "slug": "mantis",
+      "gif": "saints/mantis.gif",
+      "png": "saints/mantis.png",
+      "alt": "Mantis, the Seventh Saint: a green head with twitching antennae and scissoring mandibles"
+    },
+    {
+      "heading": "### The Book of the Rotten Jester",
+      "name": "Rotten Jester",
+      "token": 8,
+      "collection_file": "08_rotten_jester.gif",
+      "slug": "rotten-jester",
+      "gif": "saints/rotten-jester.gif",
+      "png": "saints/rotten-jester.png",
+      "alt": "Rotten Jester, the Eighth Saint: a stitched laugh, rolling eyes, and a crooked jester crown"
+    },
+    {
+      "heading": "### The Book of the Gasmask Soldier",
+      "name": "Gasmask Soldier",
+      "token": 9,
+      "collection_file": "09_gasmask_soldier.gif",
+      "slug": "gasmask-soldier",
+      "gif": "saints/gasmask-soldier.gif",
+      "png": "saints/gasmask-soldier.png",
+      "alt": "Gasmask Soldier, the Ninth Saint: a failed filter, cracked red lenses, and a mask that keeps the rot in"
+    },
+    {
+      "heading": "### The Book of the Porcelain Doll",
+      "name": "Porcelain Doll",
+      "token": 10,
+      "collection_file": "10_porcelain_doll.gif",
+      "slug": "porcelain-doll",
+      "gif": "saints/porcelain-doll.gif",
+      "png": "saints/porcelain-doll.png",
+      "alt": "Porcelain Doll, the Tenth Saint: a pale pretty face with a spreading crack and one wandering eye"
+    },
+    {
+      "heading": "### The Book of the Goat Demon",
+      "name": "Goat Demon",
+      "token": 11,
+      "collection_file": "11_goat_demon.gif",
+      "slug": "goat-demon",
+      "gif": "saints/goat-demon.gif",
+      "png": "saints/goat-demon.png",
+      "alt": "Goat Demon, the Eleventh Saint: hooked horns and a small mean ember that will not go out"
+    },
+    {
+      "heading": "### The Book of the Tendril Alien",
+      "name": "Tendril Alien",
+      "token": 12,
+      "collection_file": "12_tendril_alien.gif",
+      "slug": "tendril-alien",
+      "gif": "saints/tendril-alien.gif",
+      "png": "saints/tendril-alien.png",
+      "alt": "Tendril Alien, the Twelfth Saint: a calm dome and a chin of tendrils that did not ask permission"
+    },
+    {
+      "heading": "### The Book of the TV Head",
+      "name": "TV Head",
+      "token": 13,
+      "collection_file": "13_tv_head.gif",
+      "slug": "tv-head",
+      "gif": "saints/tv-head.gif",
+      "png": "saints/tv-head.png",
+      "alt": "TV Head, the Thirteenth Saint: a set whose screen finds a face, loses it to the bars, then finds it wrong"
+    },
+    {
+      "heading": "### The Book of the Rat King",
+      "name": "Rat King",
+      "token": 14,
+      "collection_file": "14_rat_king.gif",
+      "slug": "rat-king",
+      "gif": "saints/rat-king.gif",
+      "png": "saints/rat-king.png",
+      "alt": "Rat King, the Fourteenth Saint: a crowned rat, patron of the hoarded swarm, not to be confused with any other king"
+    },
+    {
+      "heading": "### The Book of the Frog Banker",
+      "name": "Frog Banker",
+      "token": 15,
+      "collection_file": "15_frog_banker.gif",
+      "slug": "frog-banker",
+      "gif": "saints/frog-banker.gif",
+      "png": "saints/frog-banker.png",
+      "alt": "Frog Banker, the Fifteenth Saint: top hat, monocle, and a throat sac that inflates when value comes close"
+    },
+    {
+      "heading": "### The Book of the Anglerfish Man",
+      "name": "Anglerfish Man",
+      "token": 16,
+      "collection_file": "16_anglerfish_man.gif",
+      "slug": "anglerfish-man",
+      "gif": "saints/anglerfish-man.gif",
+      "png": "saints/anglerfish-man.png",
+      "alt": "Anglerfish Man, the Sixteenth Saint: a false lure in the trench, and teeth behind the kindness"
+    },
+    {
+      "heading": "### The Book of the Mummy",
+      "name": "Mummy",
+      "token": 17,
+      "collection_file": "17_mummy.gif",
+      "slug": "mummy",
+      "gif": "saints/mummy.gif",
+      "png": "saints/mummy.png",
+      "alt": "Mummy, the Seventeenth Saint: one green eye and wraps that let go and will not be wound back"
+    },
+    {
+      "heading": "### The Book of the Ram Oracle",
+      "name": "Ram Oracle",
+      "token": 18,
+      "collection_file": "18_ram_oracle.gif",
+      "slug": "ram-oracle",
+      "gif": "saints/ram-oracle.gif",
+      "png": "saints/ram-oracle.png",
+      "alt": "Ram Oracle, the Eighteenth Saint: curled horns and a third eye that opens late, the future already rotten"
+    },
+    {
+      "heading": "### The Book of the Spore Man",
+      "name": "Spore Man",
+      "token": 19,
+      "collection_file": "19_spore_man.gif",
+      "slug": "spore-man",
+      "gif": "saints/spore-man.gif",
+      "png": "saints/spore-man.png",
+      "alt": "Spore Man, the Nineteenth Saint: a pulsing mushroom cap whose puff prefers a crowd"
+    },
+    {
+      "heading": "### The Book of the Wax Saint",
+      "name": "Wax Saint",
+      "token": 20,
+      "collection_file": "20_wax_saint.gif",
+      "slug": "wax-saint",
+      "gif": "saints/wax-saint.gif",
+      "png": "saints/wax-saint.png",
+      "alt": "Wax Saint, the Twentieth Saint: a halo, a crown-flame, and a face that sags on purpose"
+    }
+  ],
+  "scenes": [
+    {
+      "slug": "genesis_first_pixel",
+      "file": "scenes/genesis_first_pixel.png",
+      "alt": "A dark machine room. A large CRT holds a grid of dead pixels, and one hot-pink cell has flipped and will not flip back. The Robot stands watch.",
+      "luma": 40.67,
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "slug": "corrupted_chapel",
+      "file": "scenes/corrupted_chapel.png",
+      "alt": "A dark chapel with chunky stained-glass blocks, pews, a pink aisle, and melting candles. The Wax Saint stands at the altar.",
+      "luma": 46.92,
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "slug": "market_vault",
+      "file": "scenes/market_vault.png",
+      "alt": "A bank vault with a circular door standing ajar, a pink interior, stacks of unmarked bars and discs, and the Frog Banker on a plinth.",
+      "luma": 48.18,
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "slug": "penny_den",
+      "file": "scenes/penny_den.png",
+      "alt": "A grimy back-room stall: empty shelves, a cracked case, a cheap lamp, and fat unmarked pennies scattered across the counter. No prices, no signs.",
+      "luma": 44.78,
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "slug": "ranks_procession",
+      "file": "scenes/ranks_procession.png",
+      "alt": "A long hall with a pink runner and five rising dais, each lit with more candles than the last, under tall windows that climb from dim purple to hot pink.",
+      "luma": 47.93,
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "slug": "static_verses",
+      "file": "scenes/static_verses.png",
+      "alt": "A wall of dead and half-alive CRT sets. Color bars and static, no typography. TV Head occupies the central screen.",
+      "luma": 43.94,
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "slug": "rites_sacrament",
+      "file": "scenes/rites_sacrament.png",
+      "alt": "A stone offering pit in a dark chamber. Chunky pink and amber flames consume a nameless frame. Smoke hangs in blocky puffs.",
+      "luma": 43.66,
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "slug": "trench_false_light",
+      "file": "scenes/trench_false_light.png",
+      "alt": "A deep trench of jagged rock and black water. A single lure glows. Anglerfish Man waits in the column of dark.",
+      "luma": 45.5,
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "slug": "plague_spores",
+      "file": "scenes/plague_spores.png",
+      "alt": "A night rooftop of blank-windowed towers, rusted vents, unlabeled bottles, and lumpy pink spore clouds. Spore Man stands on the roof.",
+      "luma": 40.42,
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "slug": "last_backup",
+      "file": "scenes/last_backup.png",
+      "alt": "A dying archive of server racks, most of the bays already dark. Pale wax drips down the middle rack. A cracked monitor holds one last pink pixel. The Wax Saint stands to the side.",
+      "luma": 43.69,
+      "size": [
+        1600,
+        900
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "heading": "# The Corrupted Codex",
+      "image": "scenes/corrupted_chapel.png",
+      "alt": "A dark chapel with chunky stained-glass blocks, pews, a pink aisle, and melting candles. The Wax Saint stands at the altar."
+    },
+    {
+      "heading": "## The Church of the Rot",
+      "image": "scenes/corrupted_chapel.png",
+      "alt": "A dark chapel with chunky stained-glass blocks, pews, a pink aisle, and melting candles. The Wax Saint stands at the altar."
+    },
+    {
+      "heading": "## Book I. Genesis of the Rot",
+      "image": "scenes/genesis_first_pixel.png",
+      "alt": "A dark machine room. A large CRT holds a grid of dead pixels, and one hot-pink cell has flipped and will not flip back. The Robot stands watch."
+    },
+    {
+      "heading": "## Book II. Book of Saints",
+      "image": "scenes/corrupted_chapel.png",
+      "alt": "A dark chapel with chunky stained-glass blocks, pews, a pink aisle, and melting candles. The Wax Saint stands at the altar."
+    },
+    {
+      "heading": "## Book III. The Commandments",
+      "image": "scenes/market_vault.png",
+      "alt": "A bank vault with a circular door standing ajar, a pink interior, stacks of unmarked bars and discs, and the Frog Banker on a plinth."
+    },
+    {
+      "heading": "### Virtues",
+      "image": "scenes/market_vault.png",
+      "alt": "A bank vault with a circular door standing ajar, a pink interior, stacks of unmarked bars and discs, and the Frog Banker on a plinth."
+    },
+    {
+      "heading": "### On selling",
+      "image": "scenes/market_vault.png",
+      "alt": "A bank vault with a circular door standing ajar, a pink interior, stacks of unmarked bars and discs, and the Frog Banker on a plinth."
+    },
+    {
+      "heading": "### Sins",
+      "image": "scenes/penny_den.png",
+      "alt": "A grimy back-room stall: empty shelves, a cracked case, a cheap lamp, and fat unmarked pennies scattered across the counter. No prices, no signs."
+    },
+    {
+      "heading": "## Book IV. Book of Ranks",
+      "image": "scenes/ranks_procession.png",
+      "alt": "A long hall with a pink runner and five rising dais, each lit with more candles than the last, under tall windows that climb from dim purple to hot pink."
+    },
+    {
+      "heading": "## Book V. The Common Verses",
+      "image": "scenes/static_verses.png",
+      "alt": "A wall of dead and half-alive CRT sets. Color bars and static, no typography. TV Head occupies the central screen."
+    },
+    {
+      "heading": "## Book VI. Rites of the Church",
+      "image": "scenes/rites_sacrament.png",
+      "alt": "A stone offering pit in a dark chamber. Chunky pink and amber flames consume a nameless frame. Smoke hangs in blocky puffs."
+    },
+    {
+      "heading": "## Book VII. The Lives of the Twenty",
+      "image": "scenes/last_backup.png",
+      "alt": "A dying archive of server racks, most of the bays already dark. Pale wax drips down the middle rack. A cracked monitor holds one last pink pixel. The Wax Saint stands to the side."
+    },
+    {
+      "heading": "### The Book of the Robot",
+      "image": "saints/robot.gif",
+      "alt": "Robot, the First Saint: a rusted machine skull with dead circuit eyes and a short antenna",
+      "poster": "saints/robot.png"
+    },
+    {
+      "heading": "### The Book of the Ghoul",
+      "image": "saints/ghoul.gif",
+      "alt": "Ghoul, the Second Saint: a melting lime face whose grin will not stay put",
+      "poster": "saints/ghoul.png"
+    },
+    {
+      "heading": "### The Book of the Whale",
+      "image": "saints/whale.gif",
+      "alt": "Whale, the Third Saint: a cracked visor, a stitched mouth, and candles stuck to the crown",
+      "poster": "saints/whale.png"
+    },
+    {
+      "heading": "### The Book of the Wraith",
+      "image": "saints/wraith.gif",
+      "alt": "Wraith, the Fourth Saint: a thinning purple leer, most of the signal already gone",
+      "poster": "saints/wraith.png"
+    },
+    {
+      "heading": "### The Book of the Imp",
+      "image": "saints/imp.gif",
+      "alt": "Imp, the Fifth Saint: a blue frozen grin, a split skull, and a third eye that showed up uninvited",
+      "poster": "saints/imp.png"
+    },
+    {
+      "heading": "### The Book of the Plague Doctor",
+      "image": "saints/plague-doctor.gif",
+      "alt": "Plague Doctor, the Sixth Saint: a beaked mask, fogged lenses, and a cure that makes you worse",
+      "poster": "saints/plague-doctor.png"
+    },
+    {
+      "heading": "### The Book of the Mantis",
+      "image": "saints/mantis.gif",
+      "alt": "Mantis, the Seventh Saint: a green head with twitching antennae and scissoring mandibles",
+      "poster": "saints/mantis.png"
+    },
+    {
+      "heading": "### The Book of the Rotten Jester",
+      "image": "saints/rotten-jester.gif",
+      "alt": "Rotten Jester, the Eighth Saint: a stitched laugh, rolling eyes, and a crooked jester crown",
+      "poster": "saints/rotten-jester.png"
+    },
+    {
+      "heading": "### The Book of the Gasmask Soldier",
+      "image": "saints/gasmask-soldier.gif",
+      "alt": "Gasmask Soldier, the Ninth Saint: a failed filter, cracked red lenses, and a mask that keeps the rot in",
+      "poster": "saints/gasmask-soldier.png"
+    },
+    {
+      "heading": "### The Book of the Porcelain Doll",
+      "image": "saints/porcelain-doll.gif",
+      "alt": "Porcelain Doll, the Tenth Saint: a pale pretty face with a spreading crack and one wandering eye",
+      "poster": "saints/porcelain-doll.png"
+    },
+    {
+      "heading": "### The Book of the Goat Demon",
+      "image": "saints/goat-demon.gif",
+      "alt": "Goat Demon, the Eleventh Saint: hooked horns and a small mean ember that will not go out",
+      "poster": "saints/goat-demon.png"
+    },
+    {
+      "heading": "### The Book of the Tendril Alien",
+      "image": "saints/tendril-alien.gif",
+      "alt": "Tendril Alien, the Twelfth Saint: a calm dome and a chin of tendrils that did not ask permission",
+      "poster": "saints/tendril-alien.png"
+    },
+    {
+      "heading": "### The Book of the TV Head",
+      "image": "saints/tv-head.gif",
+      "alt": "TV Head, the Thirteenth Saint: a set whose screen finds a face, loses it to the bars, then finds it wrong",
+      "poster": "saints/tv-head.png"
+    },
+    {
+      "heading": "### The Book of the Rat King",
+      "image": "saints/rat-king.gif",
+      "alt": "Rat King, the Fourteenth Saint: a crowned rat, patron of the hoarded swarm, not to be confused with any other king",
+      "poster": "saints/rat-king.png"
+    },
+    {
+      "heading": "### The Book of the Frog Banker",
+      "image": "saints/frog-banker.gif",
+      "alt": "Frog Banker, the Fifteenth Saint: top hat, monocle, and a throat sac that inflates when value comes close",
+      "poster": "saints/frog-banker.png"
+    },
+    {
+      "heading": "### The Book of the Anglerfish Man",
+      "image": "saints/anglerfish-man.gif",
+      "alt": "Anglerfish Man, the Sixteenth Saint: a false lure in the trench, and teeth behind the kindness",
+      "poster": "saints/anglerfish-man.png"
+    },
+    {
+      "heading": "### The Book of the Mummy",
+      "image": "saints/mummy.gif",
+      "alt": "Mummy, the Seventeenth Saint: one green eye and wraps that let go and will not be wound back",
+      "poster": "saints/mummy.png"
+    },
+    {
+      "heading": "### The Book of the Ram Oracle",
+      "image": "saints/ram-oracle.gif",
+      "alt": "Ram Oracle, the Eighteenth Saint: curled horns and a third eye that opens late, the future already rotten",
+      "poster": "saints/ram-oracle.png"
+    },
+    {
+      "heading": "### The Book of the Spore Man",
+      "image": "saints/spore-man.gif",
+      "alt": "Spore Man, the Nineteenth Saint: a pulsing mushroom cap whose puff prefers a crowd",
+      "poster": "saints/spore-man.png"
+    },
+    {
+      "heading": "### The Book of the Wax Saint",
+      "image": "saints/wax-saint.gif",
+      "alt": "Wax Saint, the Twentieth Saint: a halo, a crown-flame, and a face that sags on purpose",
+      "poster": "saints/wax-saint.png"
+    }
+  ]
+}
